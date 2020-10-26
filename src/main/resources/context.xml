@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <context:component-scan base-package="quoters"/>
+    <context:component-scan base-package="framework"/>
+    <context:property-placeholder location="classpath:quotes.properties"/>
+
+    <bean id="astalavista" class="java.lang.String">
+        <constructor-arg value="Astalavista baby"/>
+    </bean>
+
+    <bean id="shakespeareQuoter"  class="quoters.ShakespeareQuoter" destroy-method="sayQuote" scope="prototype">
+          <property name="message" value="${shakespeareQuote}"/>
+    </bean>
+
+    <bean id="terminatorQuoter" class="quoters.TerminatorQuoter" >
+        <property name="messages">
+            <list>
+                <value>I'll be back</value>
+                <value>Trust me</value>
+                <ref bean="astalavista"/>
+            </list>
+        </property>
+    </bean>
+</beans>
